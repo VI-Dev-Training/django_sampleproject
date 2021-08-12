@@ -1,0 +1,18 @@
+{% extends 'main.html' %} {% block content %}
+
+<p>
+  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem corporis tenetur
+  laboriosam error at officiis! Placeat modi, iure, maxime repellendus
+  voluptate, dolores rem qui id incidunt at quam eum optio?
+</p>
+<ul>
+  {% for project in project%}
+  <li>
+    Title:<a href="{% url 'project' project.id %}">{{project.title}}</a> ---
+    {{project.description}}
+    <a href="{% url 'update-project' project.id%}">Edit</a>
+    <a href="{% url 'delete-project' project.id%}">Delete</a>
+  </li>
+  {% endfor%}
+</ul>
+{%endblock content%}

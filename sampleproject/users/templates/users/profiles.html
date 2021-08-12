@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<h1> User Profiles are shown here</h1>
+
+ {% for profile in profiles%}
+   <div style="border: 2px solid gray; width: 30%;">
+    <img style = "max-width: 50px;" src="{{profile.profile_image.url}}" alt="img"/>
+    <a href="{% url 'user-profile' profile.id %}"> {{profile.username}}</a>
+    <p> Skills:</p>
+    {% for skill in profile.skill_set.all%}
+       <p> {{skill}}</p>
+    {% endfor %}
+   </div>
+ {% endfor %}
+{%endblock %}

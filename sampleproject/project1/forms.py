@@ -1,5 +1,5 @@
 from django.forms import ModelForm, fields
-from .models import Project
+from .models import Project, Review
 
 
 class ProjectForm(ModelForm):
@@ -12,3 +12,9 @@ class ProjectForm(ModelForm):
             'demo_link',
             'tags'
         ]
+
+
+class addReviewForm(ModelForm):
+    class Meta:
+        model = Review
+        fields = ['value', 'body']

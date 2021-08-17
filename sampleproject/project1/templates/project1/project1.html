@@ -1,17 +1,26 @@
 {% extends 'main.html' %} {% block content %}
 
-<p>
-  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem corporis tenetur
-  laboriosam error at officiis! Placeat modi, iure, maxime repellendus
-  voluptate, dolores rem qui id incidunt at quam eum optio?
-</p>
+
+
+<div style="text-align: center; color:blueviolet;">
+  <form action="" method="get">
+    <label for="forSearchingProfiles"> Search Projects:</label>
+    <input type="text" name="search_query"value="{{search_query}}" placeholder="search by project or tag">
+    <input style = "color: darkviolet;" type="submit" value="Search">
+  </form>
+</div>
+
+<h1> Projects done by developers</h1>
+
 <ul>
   {% for project in project%}
   <li>
     Title:<a href="{% url 'project' project.id %}">{{project.title}}</a> ---
     {{project.description}}
+    {%if project.owner == request.user.profile %}
     <a href="{% url 'update-project' project.id%}">Edit</a>
     <a href="{% url 'delete-project' project.id%}">Delete</a>
+    {% endif %}
   </li>
   {% endfor%}
 </ul>

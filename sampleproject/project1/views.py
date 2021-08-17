@@ -1,17 +1,31 @@
+from users.models import Profile
 from django import forms
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
+from django.db.models import Q
 from .models import Project, Review, Tag
-from .forms import ProjectForm
+from .forms import ProjectForm, addReviewForm
 
 # Create your views here.
 
 
 def project1(request):
-    projects = Project.objects.all()
+    search_query = ''
+    
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+
+    tags = Tag.objects.filter(name__icontains = search_query)
+
+    projects = Project.objects.distinct().filter(
+        Q(title__icontains=search_query) |
+        Q(tags__in = tags)
+    )
+
     context = {
-        'project': projects
+        'project': projects,
+        'search_query': search_query
     }
     return render(request, 'project1/project1.html', context)
 
@@ -25,12 +39,14 @@ def project2(request, pk):
 
 @login_required(login_url="login")
 def createProject(request):
+    profile = request.user.profile
     projectForm = ProjectForm()
-
     if request.method == 'POST':
         projectForm = ProjectForm(request.POST, request.FILES)
         if projectForm.is_valid():
-            projectForm.save()
+            project  = projectForm.save(commit=False)
+            project.owner  = profile
+            project.save()
             return redirect('project1')
     context = {
         'form': projectForm
@@ -40,7 +56,8 @@ def createProject(request):
 
 @login_required(login_url="login")
 def updateProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile  = request.user.profile
+    project = profile.project_set.get(id=pk)
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
@@ -57,7 +74,8 @@ def updateProject(request, pk):
 
 @login_required(login_url="login")
 def deleteProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project = profile.project_set.get(id=pk)
     if request.method == 'POST':
         project.delete()
         return redirect('project1')
@@ -65,3 +83,11 @@ def deleteProject(request, pk):
         'object': project
     }
     return render(request, 'project1/delete-project.html', context)
+
+@login_required(login_url="login")
+def addReview(request, pk):
+    form = addReviewForm()
+    context = {
+      'form': form
+    }
+    return render(request, 'project1/add-review.html', context)

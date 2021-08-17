@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+    <a style="color: cornflowerblue;" href="{% url 'edit-account' %}"> EDIT PROFILE </a>
+    <a style="color: darkmagenta;" href="{% url 'create-project' %}"> ADD PROJECT </a>
+    <h1>{{profile.username}} profile</h1>
+    <img style="max-width: 500px" src="{{profile.profile_image.url}}" alt="img" />
+    <p>{{profile.email}}</p>
+    <p>{{profile.bio}}</p>
+    <a href="{% url 'add-skills' %}" style="color: tomato;"> Add Skills </a>
+    <p style="color: maroon;"> Skills :</p>
+    {% for skill in profile.skill_set.all%}
+       <a href="{% url 'update-skill' skill.id %}">Edit</a>
+       <a href="{% url 'delete-skill' skill.id %}">Delete</a> <p>{{skill}}</p>
+    {% endfor %} 
+    {% for project in profile.project_set.all %}
+    Projects-done -> 
+    <a href="{% url 'update-project' project.id%}">Edit</a>
+    <a href="{% url 'delete-project' project.id%}">Delete</a>
+    <a href="{% url 'project' project.id%}""> {{project.title}}</a>
+    <br>
+{% endfor %}
+
+{%endblock %}

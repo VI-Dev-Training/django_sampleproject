@@ -3,6 +3,14 @@
 
 {% block content %}
 
+<div style="text-align: center; color:blueviolet;">
+  <form action="" method="get">
+    <label for="forSearchingProfiles"> Search Profiles:</label>
+    <input type="text" name="search_query"value="{{search_query}}" placeholder="search by profile or skill">
+    <input style = "color: darkviolet;" type="submit" value="Search">
+  </form>
+</div>
+
 <h1> User Profiles are shown here</h1>
 
  {% for profile in profiles%}

@@ -1,5 +1,4 @@
 {% extends 'main.html' %} {% block content %}
-
 <h1>{{profile.username}} profile</h1>
 <img style="max-width: 500px" src="{{profile.profile_image.url}}" alt="img" />
 <p>{{profile.email}}</p>
@@ -9,6 +8,12 @@
 <p>{{skill}}</p>
 {% endfor %} 
 {% for project in profile.project_set.all %}
-Projects-done -> <a href="{% url 'project' project.id%}""> {{project.title}}</a>
+Projects-done -> 
+{%if project.owner == request.user.profile %}
+<a href="{% url 'update-project' project.id%}">Edit</a>
+<a href="{% url 'delete-project' project.id%}">Delete</a>
+{% endif %}
+<a href="{% url 'project' project.id%}""> {{project.title}}</a>
 <br>
-{% endfor %} {%endblock %}
+{% endfor %}
+ {%endblock %}

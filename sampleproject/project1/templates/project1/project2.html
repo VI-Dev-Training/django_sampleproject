@@ -2,8 +2,10 @@
 
 
 
+
 <img style = "max-width: 500px;" src="{{project.project_image.url}}"" alt="project_image">
 <h2>{{project.title}}</h2>
+<a href="{% url 'add-review' project.id %}"> ADD REVIEW ? </a> <br/>
 <br />
 <p>
   {{project.description}}

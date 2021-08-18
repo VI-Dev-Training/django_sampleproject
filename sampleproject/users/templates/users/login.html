@@ -15,7 +15,7 @@
       </form>
      <p> Already have an account?</p> <a href="{% url 'login' %}"> Login </a>
 {% else %}
- <form action="{% url 'login' %}" method="POST">
+ <form action="" method="POST">
    {%csrf_token%}
     <input type="text" name="username" placeholder="username"   />
     <input type="password" name="password" placeholder="Enter password here" />

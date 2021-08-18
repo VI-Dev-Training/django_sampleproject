@@ -3,6 +3,7 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
+from django.contrib import messages
 from django.db.models import Q
 from .models import Project, Review, Tag
 from .forms import ProjectForm, addReviewForm
@@ -86,7 +87,21 @@ def deleteProject(request, pk):
 
 @login_required(login_url="login")
 def addReview(request, pk):
+    projectObj = Project.objects.get(id=pk)
     form = addReviewForm()
+
+    if request.method == 'POST':
+        form = addReviewForm(request.POST)
+        review = form.save(commit=False)
+        review.project = projectObj
+        review.owner = request.user.profile
+        review.save()
+
+        projectObj.getVoteCount
+        
+        messages.success(request, 'Review added sucessfully!!!')
+        return redirect('project', pk=projectObj.id)
+
     context = {
       'form': form
     }

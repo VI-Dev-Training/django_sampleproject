@@ -3,6 +3,7 @@
 <img style="max-width: 500px" src="{{profile.profile_image.url}}" alt="img" />
 <p>{{profile.email}}</p>
 <p>{{profile.bio}}</p>
+<a href="{% url 'create-message' profile.id %}"> Send Message </a>
 <p style="color: maroon;"> Skills :</p>
 {% for skill in profile.skill_set.all%}
 <p>{{skill}}</p>

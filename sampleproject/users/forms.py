@@ -2,7 +2,7 @@ from django.db import models
 from django.forms import ModelForm, fields
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Skill
+from .models import Profile, Skill, Message
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -34,3 +34,9 @@ class SkillForm(ModelForm):
     class Meta:
         model = Skill
         fields = ['name']
+
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ['sender_name', 'email','subject', 'body']

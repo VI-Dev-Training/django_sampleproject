@@ -1,0 +1,20 @@
+{% extends 'main.html'%}
+
+{%block content%}
+
+{% if message.sender.id %}
+<p> From : <a href="{% url 'user-profile' message.sender.id %}">
+  {{message.sender}}</a> </p>
+{% else %}
+<p> From : {{message.sender_name}} (not registered)</p>
+{% endif %}
+
+<span>Sender-Email : <br/> {{message.email}}</span> <br/>
+<br/>
+<span>Subject: {{message.subject}} </span> <br/>
+<br/>
+<span>Message : <br/> <br/> {{message.body | linebreaksbr}} </span> <br/>
+<br/>
+<span>Sent: <br/> {{message.created_date}}</span> <br/>
+
+{%endblock%}

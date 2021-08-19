@@ -1,0 +1,19 @@
+{% extends 'main.html'%}
+
+{%block content%}
+
+<form action="" method="POST">
+    <a href="{% url 'user-profile' receiver.id %}"> GO BACK</a>
+    {%csrf_token%}
+    
+    {% if request.user.is_authenticated ==  False %}
+    {{form.as_p}}
+    {% else %}
+    <p>{{form.subject.label}}{{form.subject}}</p>
+    <p>{{form.body.label}}{{form.body}}</p>
+    {%endif%}
+    <input type="submit" value="send message"/>
+
+</form>
+
+{%endblock%}

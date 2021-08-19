@@ -1,0 +1,23 @@
+{% extends 'main.html'%}
+
+{%block content%}
+
+
+<p> New Messages ({{unreadCount}}) </p>
+
+  {% for message in messageRequest %}
+  {% if message.is_read == False %}
+    <div style="font-weight: bold;">
+  {% else %}
+    <div style="font-weight: lighter;">
+  {% endif %}
+  <a href="{% url 'message' message.id %}">
+  <span> {{message.sender_name}}</span>
+  <span>{{message.subject}}</span>
+  <span>{{message.created_date}}</span>
+  </a>
+  </div>
+  
+  {% endfor %}
+
+{%endblock%}

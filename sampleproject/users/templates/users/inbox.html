@@ -12,7 +12,7 @@
     <div style="font-weight: lighter;">
   {% endif %}
   <a href="{% url 'message' message.id %}">
-  <span> {{message.sender_name}}</span>
+  <span> {{message.sender}}</span>
   <span>{{message.subject}}</span>
   <span>{{message.created_date}}</span>
   </a>
